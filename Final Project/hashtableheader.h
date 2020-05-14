@@ -22,7 +22,7 @@ class HashTable {
 		// Define a hashing function for determining the place of the pair of key and value to be stored in the hashtable.
 		// In this case, we use modulo division method for the hashing function.
 		int hashing(int key) {
-			return key % 20;
+			return key % 100;
 		}
 		
 		// Define a collision resolution function to resolve collision problems in case a new pair enters a slot which has an existing pair in the hashtable.
@@ -35,7 +35,7 @@ class HashTable {
 		// Define a constructor which constructs a new hashtable if user declares a new hashtable object.
 		// We do this by inserting an empty list which will contain a pair of key and value for every slot in the container.
 		Hashtable() {
-			for(int i = 0; i < 20; i++) {
+			for(int i = 0; i < 100; i++) {
 				container[i] = list<Pair>();
 			}
 		}
@@ -48,13 +48,13 @@ class HashTable {
 		bool full() {
 			int pairCounter = 0;
 					
-			for(int i = 0; i < 20; i++) {
+			for(int i = 0; i < 100; i++) {
 				if(!container[i].empty()) {
 					pairCounter++;
 				}
 			}
 			
-			if(pairCounter == 20) {
+			if(pairCounter == 100) {
 				return true;
 			} else {
 				return false;
@@ -66,7 +66,7 @@ class HashTable {
 		// If a new pair has the same key as one of the existing pairs in the hashtable, return false.
 		// Otherwise, return true.
 		bool unique(int key) {
-			for(int i = 0; i < 20; i++) {
+			for(int i = 0; i < 100; i++) {
 				if(container[i].front().key == key) {
 					return false;
 				}
@@ -95,7 +95,7 @@ class HashTable {
 				
 				while(!container[probe].empty()) {
 					probe = probing(probe);
-					if(probe == 20) {
+					if(probe == 100) {
 						probe = 0;
 					}
 				}
