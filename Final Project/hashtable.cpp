@@ -37,7 +37,7 @@ int main() {
 				getch();
 		        
 				cin.clear();
-		        cin.ignore();
+				cin.ignore();
 		        
 				valid = false;
 		    } else {
