@@ -9,23 +9,26 @@ using namespace std;
 // Define a class which is a blueprint for declaring a hashtable which has functions for managing data inside it.
 class HashTable {
 	private:
-		// Define a struct which is a pair of key and value to be stored in the hashtable.
-		struct Pair {
-			int key;
-			string value;
+		// Define a struct which is an employee data to be stored in the hashtable.
+		struct Data {
+			int id;
+			string name;
+			string dateOfBirth;
+			int mobileNumber;
+			string email;
 		};
 		
-		// Define a list which will be the container for pairs of keys and values to be stored in the hashtable.
+		// Define a list which will be the container for employee data to be stored in the hashtable.
 		// In this case, we set the list capacity to 100 since a company holds about 100 employees.
-		list<Pair> container[100];
+		list<Data> container[100];
 		
-		// Define a hashing function for determining the place of the pair of key and value to be stored in the hashtable.
+		// Define a hashing function for determining the place of employee data to be stored in the hashtable.
 		// In this case, we use modulo division method for the hashing function.
-		int hashing(int key) {
-			return key % 100;
+		int hashing(int id) {
+			return id % 100;
 		}
 		
-		// Define a collision resolution function to resolve collision problems in case a new pair enters a slot which has an existing pair in the hashtable.
+		// Define a collision resolution function to resolve collision problems in case a new employee data enters a slot which has an existing employee data in the hashtable.
 		// In this case, we use linear probing method for the collision resolution function.
 		int probing(int hash) {
 			return hash++;
@@ -33,41 +36,41 @@ class HashTable {
 	
 	public:
 		// Define a constructor which constructs a new hashtable if user declares a new hashtable object.
-		// We do this by inserting an empty list which will contain a pair of key and value for every slot in the container.
+		// We do this by inserting an empty list which will contain an employee data for every slot in the container.
 		Hashtable() {
 			for(int i = 0; i < 100; i++) {
-				container[i] = list<Pair>();
+				container[i] = list<Data>();
 			}
 		}
 		
 		// Define a function which checks if the hashtable is full.
 		// We do this by iterating through the container.
-		// If the pair is empty, add the counter by 1.
-		// If the counter is 20, it means that the hashtable is full. Therefore, return true.
+		// If the list is empty, add the counter by 1.
+		// If the counter is 100, it means that the hashtable is full. Therefore, return true.
 		// Otherwise, the hashtable is not full. Thus, return false.
 		bool full() {
-			int pairCounter = 0;
+			int dataCounter = 0;
 					
 			for(int i = 0; i < 100; i++) {
 				if(!container[i].empty()) {
-					pairCounter++;
+					dataCounter++;
 				}
 			}
 			
-			if(pairCounter == 100) {
+			if(dataCounter == 100) {
 				return true;
 			} else {
 				return false;
 			}
 		}
 		
-		// Define a function which checks whether a new pair has the same key as one of the existing pairs in the hashtable.
+		// Define a function which checks whether a new employee data has the same id as one of the existing employee data in the hashtable.
 		// We do this by also iterating through the hashtable.
-		// If a new pair has the same key as one of the existing pairs in the hashtable, return false.
+		// If a new employee data has the same id as one of the existing employee data in the hashtable, return false.
 		// Otherwise, return true.
-		bool unique(int key) {
+		bool unique(int id) {
 			for(int i = 0; i < 100; i++) {
-				if(container[i].front().key == key) {
+				if(container[i].front().id == id) {
 					return false;
 				}
 			}
@@ -75,21 +78,24 @@ class HashTable {
 			return true;
 		}
 		
-		// Define a function to add a new pair to the hashtable.
-		// Store the key and value as a pair.
-		// Hash will be generated from the key. Hash determines the list index of the pair in the hashtable.
-		// If the current list is empty, fill the list with the new pair.
-		// Otherwise, probe the hash until it finds an empty list, then add the pair to the current list.
-		void add(int key, string value) {
-			Pair pair;
+		// Define a function to add a new employee data to the hashtable.
+		// Store the employee data.
+		// Hash will be generated from the id. Hash determines the list index of the employee data in the hashtable.
+		// If the current list is empty, fill the list with the new employee data.
+		// Otherwise, probe the hash until it finds an empty list, then add the employee data to the current list.
+		void addEmployee(int id, string name, string dateOfBirth, int mobileNumber, string email) {
+			Data data;
 			
-			pair.key = key;
-			pair.value = value;
+			data.id = id;
+			data.name = name;
+			data.dateOfBirth = dateOfBirth;
+			data.mobileNumber = mobileNumber;
+			data.email = email;
 			
-			int hash = hashing(key);
+			int hash = hashing(id);
 			
 			if(container[hash].empty()) {
-				container[hash].push_back(pair);
+				container[hash].push_back(data);
 			} else {
 				int probe = probing(hash);
 				
@@ -100,42 +106,99 @@ class HashTable {
 					}
 				}
 				
-				container[probe].push_back(pair);
+				container[probe].push_back(data);
 			}
 		}
 		
-		// Define a function to get value from key in the hashtable.
-		// Hash the key to get the list index of the key.
+		// Define a function to get an employee name from id in the hashtable.
+		// Hash the id to get the list index of the id.
 		// Define a hashtable iterator that refers to that current list in the hashtable.
 		// Iterate through that current list using the iterator.
-		// If the iterator's key finds the requested key, return the iterator's value.
+		// If the iterator's id finds the requested id, return the iterator's name.
 		// Otherwise, return an empty string.
-		string get(int key) {
-			int hash = hashing(key);
-			list<Pair> *currentPair = &container[hash];
+		string getEmployeeName(int id) {
+			int hash = hashing(id);
+			list<Data> *currentData = &container[hash];
 			
-			for(list<Pair> :: iterator itr = currentPair -> begin(); itr != currentPair -> end(); itr++) {
-				if(itr -> key == key) {
-					return itr -> value;
+			for(list<Data> :: iterator itr = currentData -> begin(); itr != currentData -> end(); itr++) {
+				if(itr -> id == id) {
+					return itr -> name;
 				}
 			}
 			
 			return "";
 		}
 		
-		// Define a function to get value from key in the hashtable.
-		// Hash the key to get the list index of the key.
+		// Define a function to get an employee date of birth from id in the hashtable.
+		// Hash the id to get the list index of the id.
 		// Define a hashtable iterator that refers to that current list in the hashtable.
 		// Iterate through that current list using the iterator.
-		// If the iterator's key finds the requested key, update the iterator's value to the new value, then return true.
-		// Otherwise, return false.
-		bool update(int key, string value) {
-			int hash = hashing(key);
-			list<Pair> *currentPair = &container[hash];
+		// If the iterator's id finds the requested id, return the iterator's date of birth.
+		// Otherwise, return an empty string.
+		string getEmployeeDateOfBirth(int id) {
+			int hash = hashing(id);
+			list<Data> *currentData = &container[hash];
 			
-			for(list<Pair> :: iterator itr = currentPair -> begin(); itr != currentPair -> end(); itr++) {
-				if(itr -> key == key) {
-					itr -> value = value;
+			for(list<Data> :: iterator itr = currentData -> begin(); itr != currentData -> end(); itr++) {
+				if(itr -> id == id) {
+					return itr -> dateOfBirth;
+				}
+			}
+			
+			return "";
+		}
+		
+		// Define a function to get an employee mobile number from id in the hashtable.
+		// Hash the id to get the list index of the id.
+		// Define a hashtable iterator that refers to that current list in the hashtable.
+		// Iterate through that current list using the iterator.
+		// If the iterator's id finds the requested id, return the iterator's mobile number.
+		// Otherwise, return 0.
+		int getEmployeeMobileNumber(int id) {
+			int hash = hashing(id);
+			list<Data> *currentData = &container[hash];
+			
+			for(list<Data> :: iterator itr = currentData -> begin(); itr != currentData -> end(); itr++) {
+				if(itr -> id == id) {
+					return itr -> mobileNumber;
+				}
+			}
+			
+			return 0;
+		}
+		
+		// Define a function to get an employee email from id in the hashtable.
+		// Hash the id to get the list index of the id.
+		// Define a hashtable iterator that refers to that current list in the hashtable.
+		// Iterate through that current list using the iterator.
+		// If the iterator's id finds the requested id, return the iterator's email.
+		// Otherwise, return an empty string.
+		string getEmployeeEmail(int id) {
+			int hash = hashing(id);
+			list<Data> *currentData = &container[hash];
+			
+			for(list<Data> :: iterator itr = currentData -> begin(); itr != currentData -> end(); itr++) {
+				if(itr -> id == id) {
+					return itr -> email;
+				}
+			}
+			
+			return "";
+		}
+		
+		// Define a function to update an employee mobile number from id in the hashtable.
+		// Hash the id to get the list index of the id.
+		// Define a hashtable iterator that refers to that current list in the hashtable.
+		// Iterate through that current list using the iterator.
+		// If the iterator's id finds the requested id, update the iterator's mobile number to the new mobile number, then return true.
+		// Otherwise, return false.
+		bool updateEmployeeMobileNumber(int id, int mobileNumber) {
+			int hash = hashing(id);
+			list<Data> *currentData = &container[hash];
+			
+			for(list<Data> :: iterator itr = currentData -> begin(); itr != currentData -> end(); itr++) {
+				if(itr -> id == id) {
+					itr -> mobileNumber = mobileNumber;
 					
 					return true;
 				}
@@ -144,19 +207,40 @@ class HashTable {
 			return false;
 		}
 		
-		// Define a function to get value from key in the hashtable.
-		// Hash the key to get the list index of the key.
+		// Define a function to update an employee email from id in the hashtable.
+		// Hash the id to get the list index of the id.
 		// Define a hashtable iterator that refers to that current list in the hashtable.
 		// Iterate through that current list using the iterator.
-		// If the iterator's key finds the requested key, remove the current pair from the list, then return true.
+		// If the iterator's id finds the requested id, update the iterator's email to the email, then return true.
 		// Otherwise, return false.
-		bool remove(int key) {
-			int hash = hashing(key);
-			list<Pair> *currentPair = &container[hash];
+		bool updateEmployeeEmail(int id, string email) {
+			int hash = hashing(id);
+			list<Data> *currentData = &container[hash];
 			
-			for(list<Pair> :: iterator itr = currentPair -> begin(); itr != currentPair -> end(); itr++) {
-				if(itr -> key == key) {
-					currentPair -> erase(itr);
+			for(list<Data> :: iterator itr = currentData -> begin(); itr != currentData -> end(); itr++) {
+				if(itr -> id == id) {
+					itr -> email = email;
+					
+					return true;
+				}
+			}
+			
+			return false;
+		}
+		
+		// Define a function to get value from id in the hashtable.
+		// Hash the id to get the list index of the id.
+		// Define a hashtable iterator that refers to that current list in the hashtable.
+		// Iterate through that current list using the iterator.
+		// If the iterator's id finds the requested id, remove the current employee data from the list, then return true.
+		// Otherwise, return false.
+		bool removeEmployee(int id) {
+			int hash = hashing(id);
+			list<Data> *currentData = &container[hash];
+			
+			for(list<Data> :: iterator itr = currentData -> begin(); itr != currentData -> end(); itr++) {
+				if(itr -> id == id) {
+					currentData -> erase(itr);
 					
 					return true;
 				}
