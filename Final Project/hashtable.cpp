@@ -1,5 +1,4 @@
 #include <iostream>
-#include <conio.h>
 #include "hashtableheader.h"
 
 using namespace std;
@@ -37,10 +36,10 @@ int main() {
 			if (choice < 1 || choice > 9 || cin.fail()) {
 		        cout << "Please pick one of the choices above." << endl;
 				
-				getch();
+				system("pause");
 		        
 				cin.clear();
-				cin.ignore();
+				cin.ignore(10000, '\n');
 		        
 				valid = false;
 		    } else {
@@ -78,7 +77,7 @@ int main() {
 					
 					// Clear the input state.
 					cin.clear();
-		        	cin.ignore();
+		        	cin.ignore(10000, '\n');
 				} else {
 					// Check if the user's inputted id exists in the hashtable.
 					// If it does not exist, ask the user to input the employee's name, date of birth, and mobile number.
@@ -105,7 +104,7 @@ int main() {
 							
 							// Clear the input state.
 							cin.clear();
-				        	cin.ignore();
+				        	cin.ignore(10000, '\n');
 						} else {
 							// Ask the user to input the employee's email.
 							cout << "Input employee's email to add: ";
@@ -127,7 +126,7 @@ int main() {
 				cout << "Hash table is full!" << endl;
 			}
 			
-			getch();
+			system("pause");
 		}
 		// If the user wants to get an employee's name,
 		else if(choice == 2) {
@@ -147,14 +146,14 @@ int main() {
 				
 				// Clear the input state.
 				cin.clear();
-				cin.ignore();
+				cin.ignore(10000, '\n');
 			} else {
 				// If the employee's id exists, the program will print the employee's name.
 				// Otherwise, the program will print an empty string for the employee's name.
 				cout << "Name of employee ID " << id << ": " << hashtable.getEmployeeName(id) << endl;
 			}
 			
-			getch();
+			system("pause");
 		}
 		// If the user wants to get an employee's date of birth,
 		else if(choice == 3) {
@@ -174,14 +173,14 @@ int main() {
 				
 				// Clear the input state.
 				cin.clear();
-				cin.ignore();
+				cin.ignore(10000, '\n');
 			} else {
 				// If the employee's id exists, the program will print the employee's date of birth.
 				// Otherwise, the program will print an empty string for the employee's date of birth.
 				cout << "Date of birth of employee ID " << id << ": " << hashtable.getEmployeeDateOfBirth(id) << endl;
 			}
 			
-			getch();
+			system("pause");
 		}
 		// If the user wants to get an employee's mobile number,
 		else if(choice == 4) {
@@ -201,14 +200,14 @@ int main() {
 				
 				// Clear the input state.
 				cin.clear();
-				cin.ignore();
+				cin.ignore(10000, '\n');
 			} else {
 				// If the employee's id exists, the program will print the employee's mobile number.
 				// Otherwise, the program will print 0 for the employee's mobile number.
 				cout << "Mobile number of employee ID " << id << ": " << hashtable.getEmployeeMobileNumber(id) << endl;
 			}
 			
-			getch();
+			system("pause");
 		}
 		// If the user wants to get an employee's email,
 		else if(choice == 5) {
@@ -228,21 +227,21 @@ int main() {
 				
 				// Clear the input state.
 				cin.clear();
-				cin.ignore();
+				cin.ignore(10000, '\n');
 			} else {
 				// If the employee's id exists, the program will print the employee's email.
 				// Otherwise, the program will print an empty string for the employee's email.
 				cout << "Email of employee ID " << id << ": " << hashtable.getEmployeeEmail(id) << endl;
 			}
 			
-			getch();
+			system("pause");
 		}
 		// If the user wants to update an employee's mobile number,
 		else if(choice == 6) {
 			// Declare an integer which gets the user's inputted id.
 			int id;
 			// Declare an integer which gets the user's inputted mobile number.
-			int mobileNumber;
+			int newMobileNumber;
 			
 			// Ask the user to input the employee's id.
 			cout << "Input employee's ID to update employee's mobile number: ";
@@ -257,11 +256,11 @@ int main() {
 				
 				// Clear the input state.
 				cin.clear();
-				cin.ignore();
+				cin.ignore(10000, '\n');
 			} else {
 				// Ask the user to input the new value.
 				cout << "Input employee's new mobile number to update employee's mobile number: ";
-				cin >> mobileNumber;
+				cin >> newMobileNumber;
 				
 				// Check if user enters an invalid input for the employee's mobile number.
 				// If user enters a non-numeric input for the employee's mobile number, print an error message and clear the input state.
@@ -272,23 +271,23 @@ int main() {
 					
 					// Clear the input state.
 					cin.clear();
-		        	cin.ignore();
+		        	cin.ignore(10000, '\n');
 				} else {
 					// Print the employee's mobile number update status.
 					// If the employee's mobile number update succeeds, the program will print 1.
 					// Otherwise, the program will print 0.
-					cout << "Employee's mobile number update status: " << hashtable.updateEmployeeMobileNumber(id, mobileNumber) << endl;
+					cout << "Employee's mobile number update status: " << hashtable.updateEmployeeMobileNumber(id, newMobileNumber) << endl;
 				}
 			}
 			
-			getch();
+			system("pause");
 		}
 		// If the user wants to update an employee's email,
 		else if(choice == 7) {
 			// Declare an integer which gets the user's inputted id.
 			int id;
 			// Declare an integer which gets the user's inputted email.
-			string email;
+			string newEmail;
 			
 			// Ask the user to input the employee's id.
 			cout << "Input employee's ID to update employee's email: ";
@@ -303,19 +302,19 @@ int main() {
 				
 				// Clear the input state.
 				cin.clear();
-				cin.ignore();
+				cin.ignore(10000, '\n');
 			} else {
 				// Ask the user to input the new value.
 				cout << "Input employee's new email to update employee's email: ";
-				cin >> email;
+				cin >> newEmail;
 				
 				// Print the employee's email update status.
 				// If the employee's email update succeeds, the program will print 1.
 				// Otherwise, the program will print 0.
-				cout << "Employee's email update status: " << hashtable.updateEmployeeEmail(id, email) << endl;
+				cout << "Employee's email update status: " << hashtable.updateEmployeeEmail(id, newEmail) << endl;
 			}
 			
-			getch();
+			system("pause");
 		}
 		// If the user wants to remove an employee,
 		else if(choice == 8) {
@@ -335,7 +334,7 @@ int main() {
 				
 				// Clear the input state.
 				cin.clear();
-				cin.ignore();
+				cin.ignore(10000, '\n');
 			} else {
 				// Print the employee removal status.
 				// If the employee removal succeeds, the program will print 1.
@@ -343,7 +342,7 @@ int main() {
 				cout << "Employee removal status: " << hashtable.removeEmployee(id) << endl;
 			}
 			
-			getch();
+			system("pause");
 		}
 		// If the user wants to exit from the program,
 		else if(choice == 9) {

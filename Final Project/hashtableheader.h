@@ -37,7 +37,7 @@ class HashTable {
 	public:
 		// Define a constructor which constructs a new hashtable if user declares a new hashtable object.
 		// We do this by inserting an empty list which will contain an employee data for every slot in the container.
-		Hashtable() {
+		HashTable() {
 			for(int i = 0; i < 100; i++) {
 				container[i] = list<Data>();
 			}
