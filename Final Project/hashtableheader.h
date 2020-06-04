@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <list>
+#include <iomanip>
 
 using namespace std;
 
@@ -13,7 +14,7 @@ class HashTable {
 		struct Data {
 			int id;
 			string name;
-			string dateOfBirth;
+			string position;
 			int mobileNumber;
 			string email;
 		};
@@ -83,12 +84,12 @@ class HashTable {
 		// Hash will be generated from the id. Hash determines the list index of the employee data in the hashtable.
 		// If the current list is empty, fill the list with the new employee data.
 		// Otherwise, probe the hash until it finds an empty list, then add the employee data to the current list.
-		void addEmployee(int id, string name, string dateOfBirth, int mobileNumber, string email) {
+		void addEmployee(int id, string name, string position, int mobileNumber, string email) {
 			Data data;
 			
 			data.id = id;
 			data.name = name;
-			data.dateOfBirth = dateOfBirth;
+			data.position = position;
 			data.mobileNumber = mobileNumber;
 			data.email = email;
 			
@@ -129,19 +130,19 @@ class HashTable {
 			return "";
 		}
 		
-		// Define a function to get an employee date of birth from id in the hashtable.
+		// Define a function to get an employee position from id in the hashtable.
 		// Hash the id to get the list index of the id.
 		// Define a hashtable iterator that refers to that current list in the hashtable.
 		// Iterate through that current list using the iterator.
-		// If the iterator's id finds the requested id, return the iterator's date of birth.
+		// If the iterator's id finds the requested id, return the iterator's position.
 		// Otherwise, return an empty string.
-		string getEmployeeDateOfBirth(int id) {
+		string getEmployeePosition(int id) {
 			int hash = hashing(id);
 			list<Data> *currentData = &container[hash];
 			
 			for(list<Data> :: iterator itr = currentData -> begin(); itr != currentData -> end(); itr++) {
 				if(itr -> id == id) {
-					return itr -> dateOfBirth;
+					return itr -> position;
 				}
 			}
 			
@@ -184,6 +185,27 @@ class HashTable {
 			}
 			
 			return "";
+		}
+		
+		// Define a function to update an employee position from id in the hashtable.
+		// Hash the id to get the list index of the id.
+		// Define a hashtable iterator that refers to that current list in the hashtable.
+		// Iterate through that current list using the iterator.
+		// If the iterator's id finds the requested id, update the iterator's position to the position, then return true.
+		// Otherwise, return false.
+		bool updateEmployeePosition(int id, string position) {
+			int hash = hashing(id);
+			list<Data> *currentData = &container[hash];
+			
+			for(list<Data> :: iterator itr = currentData -> begin(); itr != currentData -> end(); itr++) {
+				if(itr -> id == id) {
+					itr -> position = position;
+					
+					return true;
+				}
+			}
+			
+			return false;
 		}
 		
 		// Define a function to update an employee mobile number from id in the hashtable.
@@ -247,6 +269,24 @@ class HashTable {
 			}
 			
 			return false;
+		}
+		
+		// Define a function to display all data in the hashtable.
+		// Define a hashtable iterator that refers to that each list in the hashtable.
+		// Iterate through the hashtable and set the iterator to that current list in the hashtable.
+		// Iterate through that current list using the iterator.
+		// Display all data in that current list.
+		void display() {
+			list<Data> *currentData;
+			
+			cout << "|" << setw(15) << "ID" << "|" << setw(20) << "Name" << "|" << setw(30) << "Position" << "|" << setw(20) << "Mobile Number"  << "|" << setw(30) << "Email" << "|" << endl;
+			for(int i = 0; i < 100; i++) {
+				currentData = &container[i];
+				
+				for(list<Data> :: iterator itr = currentData -> begin(); itr != currentData -> end(); itr++) {
+					cout << "|" << setw(15) << itr -> id << "|" << setw(20) << itr -> name << "|" << setw(30) << itr -> position << "|" << setw(20) << itr -> mobileNumber  << "|" << setw(30) << itr -> email << "|" << endl;
+				}
+			}
 		}
 };
 
